@@ -1,4 +1,6 @@
 import 'package:firebase_project_store/src/pages/home/tabs/home_tab.dart';
+import 'package:firebase_project_store/src/pages/home/tabs/orders_tab.dart';
+import 'package:firebase_project_store/src/pages/home/tabs/places_tab.dart';
 import 'package:firebase_project_store/src/pages/products/tab/products_tab.dart';
 import 'package:firebase_project_store/src/widgets/cart/cart_widget_button.dart';
 import 'package:firebase_project_store/src/widgets/custom_drawer.dart';
@@ -35,11 +37,25 @@ class HomePage extends StatelessWidget {
           body: const ProductsTab(),
           floatingActionButton: CartWidgetButton(),
         ),
-        Container(
-          color: Colors.red,
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Lojas',
+              textAlign: TextAlign.center,
+            ),
+          ),
+          body: PlacesTab(),
+          drawer: CustomDrawer(pageController: _pageController),
         ),
-        Container(
-          color: Colors.black,
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Meus pedidos',
+              textAlign: TextAlign.center,
+            ),
+          ),
+          body: OrdersTab(),
+          drawer: CustomDrawer(pageController: _pageController),
         )
       ],
     );

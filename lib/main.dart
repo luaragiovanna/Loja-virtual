@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
           return ScopedModel<CartModel>(
             model: CartModel(
               model,
-              user: model,
               products: [],
+              isLoading: false,
             ),
             child: MaterialApp(
               title: 'Virtual Store',

@@ -3,6 +3,7 @@ import 'package:firebase_project_store/src/data/cart_product_data.dart';
 import 'package:firebase_project_store/src/data/product_data.dart';
 import 'package:firebase_project_store/src/models/cart/cart_model.dart';
 import 'package:firebase_project_store/src/models/user/user_model.dart';
+import 'package:firebase_project_store/src/pages/cart/cart_page.dart';
 import 'package:firebase_project_store/src/pages/login/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -139,15 +140,17 @@ class _ProductPageState extends State<ProductPage> {
                           ? () {
                               if (UserModel.of(context).isLoggedIn()) {
                                 //ADD AO CARRINHO
-                                CartProductData cartProductData =
-                                    CartProductData();
-                                CartModel.of(context).addCartItem(cartProductData);
-                                cartProductData.size = widget.size!;
-                                cartProductData.product_id = productData.id;
-                                cartProductData.category_product =
-                                    productData.category;
+                                CartProductData cartProduct = CartProductData();
+                                cartProduct.size = widget.size;
+                                cartProduct.product_quantity = 1;
+                                cartProduct.product_id = widget.productData.id;
+                                cartProduct.category_product =
+                                    widget.productData.category;
+                                cartProduct.productData = widget.productData;
+                                CartModel.of(context).addCartItem(cartProduct);
 
-                                cartProductData.product_quantity = 1.toString();
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const CartPagge()));
                               } else {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => LoginPage()));

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
@@ -70,12 +69,12 @@ class HomeTab extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: SliverQuiltedGridDelegate(
                         crossAxisCount: 2,
-                        mainAxisSpacing: 1,
-                        crossAxisSpacing: 1,
+                        mainAxisSpacing: 2,
+                        crossAxisSpacing: 2,
                         repeatPattern: QuiltedGridRepeatPattern.inverted,
                         pattern: const [
-                          QuiltedGridTile(2, 2),
-                          QuiltedGridTile(1, 1),
+                          QuiltedGridTile(2, 1),
+                          QuiltedGridTile(2, 1),
                         ],
                       ),
                       childrenDelegate: SliverChildBuilderDelegate(

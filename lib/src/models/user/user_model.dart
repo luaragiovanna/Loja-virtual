@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class UserModel extends Model {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late FirebaseAuth _auth = FirebaseAuth.instance;
   UserCredential? firebaseUser;
+  
   static UserModel of(BuildContext contex) => ScopedModel.of<UserModel>(contex);
 
   Map<String, dynamic> userData = Map(); //vai ter nome email address
@@ -62,6 +63,7 @@ class UserModel extends Model {
         .then((user) {
       //sucesso savar usuario
       firebaseUser = user;
+      print('user salvo');
       onSuccess();
       isLoading = false;
       notifyListeners();
@@ -97,17 +99,27 @@ class UserModel extends Model {
   }
 
   Future<Null> _loadCurrentUser() async {
-    //verificar se usuario e nulo
-    if (firebaseUser == null) await _auth.currentUser!;
+    User? firebaseUser = _auth.currentUser;
+
     if (firebaseUser != null) {
+      print("User UID: ${firebaseUser.uid}");
+
       if (userData["name"] == null) {
         DocumentSnapshot<Map<String, dynamic>> docUser = await FirebaseFirestore
             .instance
             .collection("users")
-            .doc(firebaseUser!.user!.uid)
+            .doc(firebaseUser.uid)
             .get();
-        userData = docUser.data()!;
+
+        if (docUser.exists) {
+          userData = docUser.data()!;
+          print("User data loaded: $userData");
+        } else {
+          print("Documento do usuário não encontrado.");
+        }
       }
+    } else {
+      print("Nenhum usuário está autenticado.");
     }
     notifyListeners();
   }
